@@ -1,6 +1,9 @@
 #include <iostream>
 #include <cmath>
-
+#include <string>
+#include "time.h"
+#include <unistd.h>
+// 67.251.97.194
 
 using namespace std;
 
@@ -11,8 +14,37 @@ int main(int argc, char **argv) {
 		cout << "invocation must be of the form:" << endl;
 		cout << "\t./integrate a b n n_threads" << endl;
 	}
+	/*	
+	time_t start, end;
+	time(&start);
+	sleep(3);
+	time(&end);
+	double time_total = double(end-start);	
+	cout << "total_time " << time_total << endl;
+	cout << start << endl;
+	cout << end << endl;
+	*/
 	double a, b, domain, section_len;
 	long n, n_threads, n_per_thread, remainder;
+	string n_string = argv[3];
+	/*	
+	bool contest = false;	
+	cout << "str " << n_string << endl;
+	cout << "len " << n_string.length() << endl;
+	cout << n_string.at(n_string.length()-1) << endl;
+	
+	char last = n_string.at(n_string.length()-1);	
+	
+	if(last == 's'){
+		contest = true;
+		cout << "contest" << endl;
+		string num = n_string.substr(0, n_string.length()-1);
+		cout << "num " << num << endl;
+		//n = stoi(argv[3]
+	} else{
+		cout << "false" << endl;
+	}
+	*/
 	a = stod(argv[1]);
 	b = stod(argv[2]);
 	n = stoi(argv[3]);
