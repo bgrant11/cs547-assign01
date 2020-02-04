@@ -6,6 +6,8 @@
 #include <random>
 #include <algorithm>
 #include <iomanip>
+#include <pthread.h>
+#include <assert.h>
 
 using namespace std;
 
@@ -37,7 +39,7 @@ void thread_info_ctor(thread_info* ti, double min, double max,
 											long num_samples, long thread_num);
 void thread_info_dtor(thread_info* ti);
 void print_info(thread_info* ti);
-void take_samples(thread_info* ti);
+void* take_samples(void* ti_);
 double kahan_sum(thread_info* it);
 double kahan_final(double* sums, long n_threads);
 
@@ -60,7 +62,7 @@ int main(int argc, char **argv) {
 	domain = b-a;
 	section_len = domain / (double)n_threads;
 	
-	
+	/*
 	{	// debug
 		cout << "a\t\t" << setprecision(10) << a << endl;
 		cout << "b \t\t" << setprecision(10) << b << endl;
@@ -83,7 +85,7 @@ int main(int argc, char **argv) {
 		//	cout << unif(re) << endl;;
 		//}
 	}
-	
+	*/
 	
 	// each thread is randomly assigned a section to randomize distribution	
 	
@@ -98,23 +100,23 @@ int main(int argc, char **argv) {
 	for(long i = 0; i < remainder; i++){
 		sample_count[i]++;
 	}
-	
+	/*
 	{ // debug
 		cout << "before shuffle" << endl;
 		for(long i = 0; i < n_threads; i++){
 			cout << sample_count[i] << endl;
 		}
 	}
-	
+	*/
 	shuffle(sample_count, sample_count+n_threads, default_random_engine());
-	
+	/*
 	{ // debug
 		cout << "after shuffle" << endl;
 		for(long i = 0; i < n_threads; i++){
 			cout << sample_count[i] << endl;
 		}
 	}
-	 
+	 */
 	thread_info *threads = new (nothrow) thread_info[n_threads];
 	
 	double low, high;
@@ -136,9 +138,18 @@ int main(int argc, char **argv) {
 
 	}
 	*/
+	int rv;
+	pthread_t* tids = new pthread_t[n_threads];
 	for(long i = 0; i < n_threads; i++){
-		take_samples(&(threads[i]));
+		//take_samples(&(threads[i]));
+		rv = pthread_create(&(tids[i]), NULL, take_samples, (void*)&(threads[i]) );
+		assert(rv == 0); 
 	}
+	for(long i = 0; i < n_threads; i++){
+		rv = pthread_join(tids[i], NULL);
+	}
+	
+
 	/*
 	{ // debug
 		cout << "after samples taken" << endl;		
@@ -219,7 +230,8 @@ void print_info(thread_info* ti){
 	cout << "-----------------------------" << endl;
 }
 
-void take_samples(thread_info* ti){
+void* take_samples(void* ti_){
+	thread_info* ti = (thread_info*)ti_;	
 	double in;
 	double result;	
 	for(; ti->samples_taken < ti->num_samples; ti->samples_taken++){
@@ -240,6 +252,7 @@ void take_samples(thread_info* ti){
 		//ti->sum += fn(ti->dist(ti->engine));
 	}
 	sort(ti->results, ti->results + ti->num_samples);
+	return NULL;
 }
 
 double kahan_sum(thread_info* it){

@@ -2,7 +2,7 @@
 all: integrate
 
 integrate: main.o
-	g++ -O0 -g -Wall -Wextra -pedantic -std=c++11  main.o -o integrate
+	g++ -O0 -g -Wall -Wextra -pedantic -std=c++11  main.o -o integrate -pthread
 
 main.o:	main.cpp
 	g++ -O0 -g -Wall -Wextra -pedantic  -std=c++11 -c main.cpp
