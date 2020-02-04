@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
 	}
 	double final_sum = kahan_final(kahan_result, n_threads);
 	double last = final_sum / ((double)n);	
-	
+	cout << "n_threads " << n_threads << endl;
 	cout << "result " << setprecision(20) << last << endl;
 	
 	delete[] kahan_result;
