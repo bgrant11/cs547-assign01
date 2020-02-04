@@ -12,7 +12,7 @@ clean:
 
 #./integrate a b n n_threads
 test: integrate
-	./integrate 1.2 3.6 15s 8
+	./integrate 100 10000 100000000 32
 
 
 
