@@ -1,0 +1,240 @@
+n_threads 1
+result 0.91191645704572399378
+
+real	0m3.225s
+user	0m2.948s
+sys	0m0.151s
+n_threads 2
+result 0.91191645704572399378
+
+real	0m1.608s
+user	0m2.842s
+sys	0m0.135s
+n_threads 3
+result 0.91191645704572399378
+
+real	0m1.375s
+user	0m3.476s
+sys	0m0.144s
+n_threads 4
+result 0.91191645704572399378
+
+real	0m0.979s
+user	0m3.440s
+sys	0m0.152s
+n_threads 5
+result 0.91191645704572377173
+
+real	0m0.911s
+user	0m4.154s
+sys	0m0.200s
+n_threads 6
+result 0.91191645704572399378
+
+real	0m0.660s
+user	0m3.580s
+sys	0m0.190s
+n_threads 7
+result 0.91191645704572377173
+
+real	0m0.818s
+user	0m4.504s
+sys	0m0.231s
+n_threads 8
+result 0.91191645704572399378
+
+real	0m0.697s
+user	0m5.127s
+sys	0m0.247s
+n_threads 9
+result 0.91191645704572399378
+
+real	0m0.542s
+user	0m4.188s
+sys	0m0.281s
+n_threads 10
+result 0.91191645704572377173
+
+real	0m0.633s
+user	0m5.122s
+sys	0m0.314s
+n_threads 11
+result 0.91191645704572377173
+
+real	0m0.649s
+user	0m5.781s
+sys	0m0.382s
+n_threads 12
+result 0.91191645704572399378
+
+real	0m0.573s
+user	0m6.159s
+sys	0m0.421s
+n_threads 13
+result 0.91191645704572377173
+
+real	0m0.679s
+user	0m6.270s
+sys	0m0.477s
+n_threads 14
+result 0.91191645704572377173
+
+real	0m0.760s
+user	0m6.220s
+sys	0m0.470s
+n_threads 15
+result 0.91191645704572377173
+
+real	0m0.678s
+user	0m7.271s
+sys	0m0.523s
+n_threads 16
+result 0.91191645704572399378
+
+real	0m0.503s
+user	0m5.942s
+sys	0m0.556s
+n_threads 17
+result 0.91191645704572399378
+
+real	0m0.502s
+user	0m6.349s
+sys	0m0.591s
+n_threads 18
+result 0.91191645704572377173
+
+real	0m0.542s
+user	0m7.155s
+sys	0m0.613s
+n_threads 19
+result 0.91191645704572399378
+
+real	0m0.501s
+user	0m7.319s
+sys	0m0.608s
+n_threads 20
+result 0.91191645704572377173
+
+real	0m0.486s
+user	0m7.532s
+sys	0m0.508s
+n_threads 21
+result 0.91191645704572399378
+
+real	0m0.466s
+user	0m7.929s
+sys	0m0.554s
+n_threads 22
+result 0.91191645704572377173
+
+real	0m0.458s
+user	0m8.246s
+sys	0m0.541s
+n_threads 23
+result 0.91191645704572399378
+
+real	0m0.451s
+user	0m8.509s
+sys	0m0.475s
+n_threads 24
+result 0.91191645704572399378
+
+real	0m0.441s
+user	0m8.952s
+sys	0m0.558s
+n_threads 25
+result 0.91191645704572399378
+
+real	0m0.547s
+user	0m8.705s
+sys	0m0.506s
+n_threads 26
+result 0.91191645704572377173
+
+real	0m0.607s
+user	0m8.952s
+sys	0m0.500s
+n_threads 27
+result 0.91191645704572399378
+
+real	0m0.634s
+user	0m9.238s
+sys	0m0.480s
+n_threads 28
+result 0.91191645704572377173
+
+real	0m0.605s
+user	0m8.922s
+sys	0m0.475s
+n_threads 29
+result 0.91191645704572399378
+
+real	0m0.603s
+user	0m9.276s
+sys	0m0.492s
+n_threads 30
+result 0.91191645704572377173
+
+real	0m0.575s
+user	0m8.612s
+sys	0m0.452s
+n_threads 31
+result 0.91191645704572399378
+
+real	0m0.612s
+user	0m8.703s
+sys	0m0.447s
+n_threads 32
+result 0.91191645704572399378
+
+real	0m0.571s
+user	0m8.272s
+sys	0m0.465s
+n_threads 33
+result 0.91191645704572399378
+
+real	0m0.534s
+user	0m8.705s
+sys	0m0.477s
+n_threads 34
+result 0.91191645704572399378
+
+real	0m0.515s
+user	0m8.370s
+sys	0m0.441s
+n_threads 35
+result 0.91191645704572377173
+
+real	0m0.530s
+user	0m8.764s
+sys	0m0.437s
+n_threads 36
+result 0.91191645704572377173
+
+real	0m0.500s
+user	0m8.657s
+sys	0m0.440s
+n_threads 37
+result 0.91191645704572399378
+
+real	0m0.569s
+user	0m8.408s
+sys	0m0.399s
+n_threads 38
+result 0.91191645704572399378
+
+real	0m0.560s
+user	0m8.774s
+sys	0m0.449s
+n_threads 39
+result 0.91191645704572399378
+
+real	0m0.558s
+user	0m8.781s
+sys	0m0.444s
+n_threads 40
+result 0.91191645704572377173
+
+real	0m0.550s
+user	0m9.038s
+sys	0m0.413s
