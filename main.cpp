@@ -12,6 +12,8 @@
 using namespace std;
 
 struct thread_info{
+	double a;
+	double b;	
 	long thread_num;	
 	double max;
 	double min;
@@ -25,7 +27,7 @@ struct thread_info{
 };
 
 
-double a, b, domain, section_len;
+
 
 
 
@@ -36,7 +38,7 @@ double a, b, domain, section_len;
 double fn(double x);
 //double rand_d(const double min, const double max); 
 void thread_info_ctor(thread_info* ti, double min, double max, 
-											long num_samples, long thread_num);
+						long num_samples, long thread_num, double a, double b);
 void thread_info_dtor(thread_info* ti);
 void print_info(thread_info* ti);
 void* take_samples(void* ti_);
@@ -52,7 +54,7 @@ int main(int argc, char **argv) {
 	//double a, b, domain, section_len;
 	long n, n_threads, n_per_thread, remainder;
 	string n_string = argv[3];
-
+	double a, b, domain, section_len;
 	a = stod(argv[1]);
 	b = stod(argv[2]);
 	n = stoi(argv[3]);
@@ -126,7 +128,7 @@ int main(int argc, char **argv) {
 		//if(i == (n_threads-1)){
 		//	high = b;
 		//}		
-		thread_info_ctor(&(threads[i]), low, high, sample_count[i], i);		
+		thread_info_ctor(&(threads[i]), low, high, sample_count[i], i, a, b);		
 		low = high;
 	}
 	
@@ -170,11 +172,11 @@ int main(int argc, char **argv) {
 	cout << "kahan" << endl;
 	double* kahan_result = new (nothrow) double[n_threads];
 	for(int i = 0; i < n_threads; i++){
-		kahan_result[i] = kahan_sum(&threads[i]);
+		kahan_result[i] = threads[i].sum;
 	}
 	double final_sum = kahan_final(kahan_result, n_threads);
 	double last = final_sum / ((double)n);	
-	cout << "last " << last << endl;
+	cout << "last " << setprecision(20) <<last << endl;
 }
 
 double fn(double x){
@@ -186,7 +188,9 @@ double fn(double x){
 //}
 
 void thread_info_ctor(thread_info* ti, double min, double max, 
-											long num_samples, long thread_num){
+						long num_samples, long thread_num, double a, double b){
+	ti->a = a;	
+	ti->b = b;
 	ti->max = max;
 	ti->min = min;
 	ti->num_samples = num_samples;
@@ -229,15 +233,22 @@ void print_info(thread_info* ti){
 	cout << "samples_taken " << ti->samples_taken << endl;
 	cout << "-----------------------------" << endl;
 }
-
+// l_ signifies local version of struct data
 void* take_samples(void* ti_){
 	thread_info* ti = (thread_info*)ti_;	
+		
 	double in;
-	double result;	
-	for(; ti->samples_taken < ti->num_samples; ti->samples_taken++){
+	double result;
+	long l_samples_taken = 0;
+	long l_num_samples = ti->num_samples;	
+	double l_a = ti->a;	
+	double l_b = ti->b;
+	double l_sum = 0;	
+	double * local_results = new double[l_num_samples];	
+	for(; l_samples_taken < l_num_samples; l_samples_taken++){
 		//in = ti->dist(ti->engine);
 		
-		uniform_real_distribution<double> unif(a,b);
+		uniform_real_distribution<double> unif(l_a,l_b);
    		default_random_engine re;		
    		in = unif(re);
 				
@@ -246,12 +257,18 @@ void* take_samples(void* ti_){
 		} else{		
 			result = fn(in);
 		}
-		ti->sum += result;
-		ti->input[ti->samples_taken] = in;
-		ti->results[ti->samples_taken] = result;
-		//ti->sum += fn(ti->dist(ti->engine));
+		
+		local_results[l_samples_taken] = result;
+		//ti->sum += result;
+		//ti->input[ti->samples_taken] = in;
+		//ti->results[ti->samples_taken] = result;
+		
 	}
-	sort(ti->results, ti->results + ti->num_samples);
+	//sort(ti->results, ti->results + ti->num_samples);
+	sort(local_results, local_results + l_num_samples);
+	l_sum = kahan_final(local_results, l_num_samples);	
+	ti->sum = l_sum;
+	delete[] local_results;
 	return NULL;
 }
 
