@@ -5,7 +5,7 @@
 # Number of Nodes 
 #SBATCH -N 1
 # Assign memory usage in Megabytes 
-#SBATCH --mem=1024
+#SBATCH --mem=8G
 
 # Run for n trials for n threads
 A=-1

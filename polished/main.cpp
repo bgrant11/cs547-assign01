@@ -128,7 +128,7 @@ void* take_samples(void* ti_){
     if (rc != 0){
       	std::cerr << "Error setting affinity" << '\n';
    	}
-
+	
 	double in;
 	double result;
 	long l_samples_taken = 0;
