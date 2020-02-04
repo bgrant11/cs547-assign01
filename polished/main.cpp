@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <pthread.h>
 #include <assert.h>
+#include <thread>
 
 using namespace std;
 
@@ -63,6 +64,10 @@ int main(int argc, char **argv) {
 
 	int rv;
 	pthread_t* tids = new pthread_t[n_threads];
+	
+
+
+
 	for(long i = 0; i < n_threads; i++){
 		rv = pthread_create(&(tids[i]), NULL, take_samples, (void*)&(threads[i]) );
 		assert(rv == 0); 
@@ -111,6 +116,19 @@ void print_info(thread_info* ti){
 void* take_samples(void* ti_){
 	thread_info* ti = (thread_info*)ti_;	
 		
+	// set affinity
+	int rc;
+	const unsigned int num_cpus = thread::hardware_concurrency();
+	//cout << "num_cpus " << num_cpus << endl;
+	//cout << pthread_self() << endl;
+	cpu_set_t cpuset;
+   	CPU_ZERO(&cpuset);
+   	CPU_SET( (ti->thread_num % num_cpus ), &cpuset);
+	rc = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
+    if (rc != 0){
+      	std::cerr << "Error setting affinity" << '\n';
+   	}
+
 	double in;
 	double result;
 	long l_samples_taken = 0;
