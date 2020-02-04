@@ -192,7 +192,7 @@ double fn(double x){
 
 //double rand_d(const double min, const double max){
 	
-//}
+
 
 void thread_info_ctor(thread_info* ti, double min, double max, 
 						long num_samples, long thread_num, double a, double b){
