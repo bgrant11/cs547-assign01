@@ -14,7 +14,7 @@ clean:
 test: integrate
 	./integrate 100 10000 100000000 32
 
-
+#0.00062686611449010273996
 
 # need to change
 gdb: integrate
