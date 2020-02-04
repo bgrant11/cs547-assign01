@@ -161,6 +161,7 @@ int main(int argc, char **argv) {
 
 	}
 	*/
+	/*	
 	double total_sum = 0.0;
 	for(int i = 0; i < n_threads; i++){
 		total_sum += threads[i].sum;
@@ -168,7 +169,8 @@ int main(int argc, char **argv) {
 	double result = total_sum / ((double)n);
 	cout << "total_sum " << total_sum << endl;
 	cout << "result " << result << endl;
-	
+	*/
+
 	cout << "kahan" << endl;
 	double* kahan_result = new (nothrow) double[n_threads];
 	for(int i = 0; i < n_threads; i++){
@@ -177,6 +179,11 @@ int main(int argc, char **argv) {
 	double final_sum = kahan_final(kahan_result, n_threads);
 	double last = final_sum / ((double)n);	
 	cout << "last " << setprecision(20) <<last << endl;
+	
+	delete[] kahan_result;
+	delete[] sample_count;
+	delete[] threads;
+	delete[] tids;
 }
 
 double fn(double x){
@@ -194,8 +201,8 @@ void thread_info_ctor(thread_info* ti, double min, double max,
 	ti->max = max;
 	ti->min = min;
 	ti->num_samples = num_samples;
-	ti->input = new (nothrow) double[num_samples];	 
-	ti->results = new (nothrow) double[num_samples];
+	//ti->input = new (nothrow) double[num_samples];	 
+	//ti->results = new (nothrow) double[num_samples];
 	ti->sum = 0.0;
 	ti->samples_taken = 0;
 	ti->dist = uniform_real_distribution<double>(min,max);

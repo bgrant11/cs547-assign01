@@ -21,10 +21,10 @@ gdb: integrate
 	gdb ./integrate 
 
 val: integrate
-	valgrind --leak-check=full ./integrate
+	valgrind --leak-check=full ./integrate 100 10000 100 32
 
 valv: integrate
-	valgrind --leak-check=full ./integrate
+	valgrind --leak-check=full ./integrate 100 10000 100 32
 
 
 
