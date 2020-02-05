@@ -1,20 +1,20 @@
 
-all: integrate
+all: integrate results
 
 integrate: main.o
-	g++ -O0 -g -Wall -Wextra -pedantic -std=c++11  main.o -o integrate -pthread
+	g++ -O4 -g -Wall -Wextra -pedantic -std=c++11  main.o -o integrate -pthread
 
 main.o:	main.cpp
-	g++ -O0 -g -Wall -Wextra -pedantic  -std=c++11 -c main.cpp
+	g++ -O4 -g -Wall -Wextra -pedantic  -std=c++11 -c main.cpp
 
 clean:
-	rm -f *.o integrate
+	rm -f *.o integrate results
 
 #./integrate a b n n_threads
 test: integrate
-	./integrate 100 10000 100000000 32
+	time ./integrate -1 1 100000000 32
 
-
+#0.00062686611449010273996
 
 # need to change
 gdb: integrate
@@ -28,4 +28,9 @@ valv: integrate
 
 
 
+results: results.cpp
+	g++ -o results results.cpp
 
+re: results
+	./results
+	
