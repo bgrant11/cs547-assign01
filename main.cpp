@@ -19,6 +19,7 @@ struct thread_info{
 	long thread_num;	
 	long num_samples;
 	double sum;
+	//uniform_real_distribution<double> unif;
 };
 
 
@@ -58,6 +59,8 @@ int main(int argc, char **argv) {
 	//random_device rd;
 	//default_random_engine re(time(NULL));
 	//minstd_rand re;	
+	
+
 	mt19937_64 re;
 	re.seed(chrono::system_clock::now().time_since_epoch().count());
 	shuffle(sample_count, sample_count+n_threads, re);
@@ -142,8 +145,6 @@ void* take_samples(void* ti_){
 	// set affinity
 	int rc;
 	const unsigned int num_cpus = thread::hardware_concurrency();
-	//cout << "num_cpus " << num_cpus << endl;
-	//cout << pthread_self() << endl;
 	cpu_set_t cpuset;
    	CPU_ZERO(&cpuset);
    	CPU_SET( (ti->thread_num % num_cpus ), &cpuset);
