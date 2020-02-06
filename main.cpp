@@ -119,6 +119,11 @@ int main(int argc, char **argv) {
 
 double fn(double x){
 	return sin(x)/x;
+	//5040 120 6
+	//double a = x*x*x;
+	//double b = x*x*x*x*x;
+	//double c = x*x*x*x*x*x*x;
+	//return x - (a/(double)6) + (b/(double)120) - (c/(double)5040);
 }
 
 void thread_info_ctor(thread_info* ti, long num_samples, long thread_num, 
