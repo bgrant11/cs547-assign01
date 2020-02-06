@@ -2,12 +2,12 @@
 all: integrate results
 
 integrate: main.o
-	g++ -O4 -g -Wall -Wextra -pedantic -std=c++11  main.o -o integrate -pthread
-	#g++ -O4 -std=c++11  main.o -o integrate -pthread
+	#g++ -O4 -g -Wall -Wextra -pedantic -std=c++11  main.o -o integrate -pthread
+	g++ -O4 -std=c++11  main.o -o integrate -pthread
 
 main.o:	main.cpp
-	g++ -O4 -g -Wall -Wextra -pedantic  -std=c++11 -c main.cpp
-	#g++ -O4 -std=c++11 -c main.cpp
+	#g++ -O4 -g -Wall -Wextra -pedantic  -std=c++11 -c main.cpp
+	g++ -O4 -std=c++11 -c main.cpp
 
 clean:
 	rm -f *.o integrate results slurm-*.out
