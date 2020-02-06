@@ -57,8 +57,9 @@ int main(int argc, char **argv) {
 		sample_count[i]++;
 	}
 	//random_device rd;
-	//default_random_engine re(time(NULL));
-	//minstd_rand re;	
+	//default_random_engine re;
+	//re.seed(chrono::system_clock::now().time_since_epoch().count());
+		
 	
 
 	mt19937_64 re;
@@ -174,7 +175,11 @@ void* take_samples(void* ti_){
 	//double * local_results = new double[l_num_samples];	
 	uniform_real_distribution<double> unif(l_a,l_b);
 	
-	//minstd_rand re;
+	//default_random_engine re;
+	//re.seed(ti->thread_num);
+		
+
+	
 	mt19937_64 re;
 	re.seed(ti->thread_num);
 	for(; l_samples_taken < l_num_samples; l_samples_taken++){
