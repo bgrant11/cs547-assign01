@@ -82,16 +82,31 @@ int main(int argc, char **argv) {
 		rv = pthread_join(tids[i], NULL);
 	}
 	
-	double* kahan_result = new (nothrow) double[n_threads];
+	
+	double sum = 0.0;
+	double c = 0.0;
+	double y, t;
+
+	//double* kahan_result = new (nothrow) double[n_threads];
 	for(int i = 0; i < n_threads; i++){
-		kahan_result[i] = threads[i].sum;
+		//kahan_result[i] = threads[i].sum;
+
+
+		y = threads[i].sum - c;
+		t = sum + y;
+		c = (t - sum) - y;
+		sum = t;
+
 	}
-	double final_sum = kahan_final(kahan_result, n_threads);
-	double last = final_sum / ((double)n);	
+	//double final_sum = kahan_final(kahan_result, n_threads);
+	//double last = final_sum / ((double)n);	
+
+	double last = sum / ((double)n);
+
 	//cout << "n_threads " << n_threads << endl;
 	cout << setprecision(20) << last << endl;
 	
-	delete[] kahan_result;
+	//delete[] kahan_result;
 	delete[] sample_count;
 	delete[] threads;
 	delete[] tids;

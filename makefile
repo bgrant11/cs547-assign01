@@ -10,6 +10,9 @@ main.o:	main.cpp
 clean:
 	rm -f *.o integrate results slurm-*.out
 
+clean2:
+	rm -f *.txt
+
 #./integrate a b n n_threads
 test: integrate
 	time ./integrate -1 1 100000000 32
