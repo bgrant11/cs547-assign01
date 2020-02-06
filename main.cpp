@@ -45,6 +45,7 @@ int main(int argc, char **argv) {
 	n_threads = stoi(argv[4]);
 	n_per_thread = n/n_threads;
 	remainder = n%n_threads;
+	double length = b - a;
 
 	long * sample_count = new (nothrow) long[n_threads];
 		
@@ -102,6 +103,7 @@ int main(int argc, char **argv) {
 	//double last = final_sum / ((double)n);	
 
 	double last = sum / ((double)n);
+	last*=length;
 
 	//cout << "n_threads " << n_threads << endl;
 	cout << setprecision(20) << last << endl;
