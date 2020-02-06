@@ -19,7 +19,6 @@ struct thread_info{
 	long thread_num;	
 	long num_samples;
 	double sum;
-	//uniform_real_distribution<double> unif;
 };
 
 
@@ -56,11 +55,6 @@ int main(int argc, char **argv) {
 	for(long i = 0; i < remainder; i++){
 		sample_count[i]++;
 	}
-	//random_device rd;
-	//default_random_engine re;
-	//re.seed(chrono::system_clock::now().time_since_epoch().count());
-		
-	
 
 	mt19937_64 re;
 	re.seed(chrono::system_clock::now().time_since_epoch().count());
@@ -69,16 +63,12 @@ int main(int argc, char **argv) {
 	thread_info *threads = new (nothrow) thread_info[n_threads];
 
 	for(long i = 0; i < n_threads; i++){
-		thread_info_ctor(&(threads[i]), sample_count[i], i, a, b);
-		//cout << sample_count[i] << endl;		
+		thread_info_ctor(&(threads[i]), sample_count[i], i, a, b);	
 	}
 
 	int rv;
 	pthread_t* tids = new pthread_t[n_threads];
 	
-
-
-
 	for(long i = 0; i < n_threads; i++){
 		rv = pthread_create(&(tids[i]), NULL, take_samples, (void*)&(threads[i]) );
 		assert(rv == 0); 
@@ -87,32 +77,22 @@ int main(int argc, char **argv) {
 		rv = pthread_join(tids[i], NULL);
 	}
 	
-	
 	double sum = 0.0;
 	double c = 0.0;
 	double y, t;
 
-	//double* kahan_result = new (nothrow) double[n_threads];
 	for(int i = 0; i < n_threads; i++){
-		//kahan_result[i] = threads[i].sum;
-
-
 		y = threads[i].sum - c;
 		t = sum + y;
 		c = (t - sum) - y;
 		sum = t;
-
 	}
-	//double final_sum = kahan_final(kahan_result, n_threads);
-	//double last = final_sum / ((double)n);	
 
 	double last = sum / ((double)n);
 	last*=length;
 
-	//cout << "n_threads " << n_threads << endl;
 	cout << setprecision(20) << last << endl;
 	
-	//delete[] kahan_result;
 	delete[] sample_count;
 	delete[] threads;
 	delete[] tids;
@@ -120,11 +100,6 @@ int main(int argc, char **argv) {
 
 double fn(double x){
 	return sin(x)/x;
-	//5040 120 6
-	//double a = x*x*x;
-	//double b = x*x*x*x*x;
-	//double c = x*x*x*x*x*x*x;
-	//return x - (a/(double)6) + (b/(double)120) - (c/(double)5040);
 }
 
 void thread_info_ctor(thread_info* ti, long num_samples, long thread_num, 
@@ -159,11 +134,9 @@ void* take_samples(void* ti_){
       	std::cerr << "Error setting affinity" << '\n';
    	}
 	
-
 	double sum = 0.0;
 	double c = 0.0;
 	double y, t;
-
 
 	double in;
 	double result;
@@ -171,42 +144,23 @@ void* take_samples(void* ti_){
 	long l_num_samples = ti->num_samples;	
 	double l_a = ti->a;	
 	double l_b = ti->b;
-	//double l_sum = 0;	
-	//double * local_results = new double[l_num_samples];	
+	
 	uniform_real_distribution<double> unif(l_a,l_b);
-	
-	//default_random_engine re;
-	//re.seed(ti->thread_num);
-		
-
-	
 	mt19937_64 re;
 	re.seed(ti->thread_num);
 	for(; l_samples_taken < l_num_samples; l_samples_taken++){
-   		//default_random_engine re;	
-        //mt19937_64 re(de());
-		//minstd_rand re(de());	
    		in = unif(re);
 		if(in == 0){
 			result = 1;
 		} else{		
 			result = fn(in);
 		}
-		//local_results[l_samples_taken] = result;
-		
 		y = result - c;
 		t = sum + y;
 		c = (t - sum) - y;
 		sum = t;
-		
 	}
-	//sort(local_results, local_results + l_num_samples);
-	//l_sum = kahan_final(local_results, l_num_samples);	
-	//ti->sum = l_sum;
-	//delete[] local_results;
-
 	ti->sum = sum;
-	
 	return NULL;
 }
 
