@@ -8,7 +8,7 @@ main.o:	main.cpp
 	g++ -O4 -g -Wall -Wextra -pedantic  -std=c++11 -c main.cpp
 
 clean:
-	rm -f *.o integrate results
+	rm -f *.o integrate results slurm-*.out
 
 #./integrate a b n n_threads
 test: integrate
