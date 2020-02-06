@@ -13,6 +13,7 @@ clean:
 #./integrate a b n n_threads
 test: integrate
 	time ./integrate -1 1 100000000 32
+	#time ./integrate -1 1 50 7
 
 #0.00062686611449010273996
 

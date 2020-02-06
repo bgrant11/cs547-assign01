@@ -9,6 +9,7 @@
 #include <pthread.h>
 #include <assert.h>
 #include <thread>
+#include <chrono> 
 
 using namespace std;
 
@@ -53,14 +54,17 @@ int main(int argc, char **argv) {
 	for(long i = 0; i < remainder; i++){
 		sample_count[i]++;
 	}
-	random_device rd;
-	default_random_engine re(rd());
+	//random_device rd;
+	//default_random_engine re(time(NULL));
+	minstd_rand re;	
+	re.seed(chrono::system_clock::now().time_since_epoch().count());
 	shuffle(sample_count, sample_count+n_threads, re);
 
 	thread_info *threads = new (nothrow) thread_info[n_threads];
 
 	for(long i = 0; i < n_threads; i++){
-		thread_info_ctor(&(threads[i]), sample_count[i], i, a, b);		
+		thread_info_ctor(&(threads[i]), sample_count[i], i, a, b);
+		//cout << sample_count[i] << endl;		
 	}
 
 	int rv;
@@ -140,10 +144,12 @@ void* take_samples(void* ti_){
 	double * local_results = new double[l_num_samples];	
 	uniform_real_distribution<double> unif(l_a,l_b);
 	random_device de;
+	minstd_rand re;
+	re.seed(ti->thread_num);
 	for(; l_samples_taken < l_num_samples; l_samples_taken++){
    		//default_random_engine re;	
         //mt19937_64 re(de());
-		minstd_rand re(de());	
+		//minstd_rand re(de());	
    		in = unif(re);
 		if(in == 0){
 			result = 1;
