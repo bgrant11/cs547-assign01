@@ -57,6 +57,7 @@ int main(int argc, char **argv) {
 	//random_device rd;
 	//default_random_engine re(time(NULL));
 	minstd_rand re;	
+	
 	re.seed(chrono::system_clock::now().time_since_epoch().count());
 	shuffle(sample_count, sample_count+n_threads, re);
 
@@ -134,14 +135,20 @@ void* take_samples(void* ti_){
       	std::cerr << "Error setting affinity" << '\n';
    	}
 	
+
+	double sum = 0.0;
+	double c = 0.0;
+	double y, t;
+
+
 	double in;
 	double result;
 	long l_samples_taken = 0;
 	long l_num_samples = ti->num_samples;	
 	double l_a = ti->a;	
 	double l_b = ti->b;
-	double l_sum = 0;	
-	double * local_results = new double[l_num_samples];	
+	//double l_sum = 0;	
+	//double * local_results = new double[l_num_samples];	
 	uniform_real_distribution<double> unif(l_a,l_b);
 	random_device de;
 	minstd_rand re;
@@ -156,12 +163,21 @@ void* take_samples(void* ti_){
 		} else{		
 			result = fn(in);
 		}
-		local_results[l_samples_taken] = result;
+		//local_results[l_samples_taken] = result;
+		
+		y = result - c;
+		t = sum + y;
+		c = (t - sum) - y;
+		sum = t;
+		
 	}
-	sort(local_results, local_results + l_num_samples);
-	l_sum = kahan_final(local_results, l_num_samples);	
-	ti->sum = l_sum;
-	delete[] local_results;
+	//sort(local_results, local_results + l_num_samples);
+	//l_sum = kahan_final(local_results, l_num_samples);	
+	//ti->sum = l_sum;
+	//delete[] local_results;
+
+	ti->sum = sum;
+	
 	return NULL;
 }
 
